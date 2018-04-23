@@ -1,0 +1,89 @@
+buildscript {
+    ext {
+        kotlinVersion = "1.2.40"
+        springBootVersion = "2.0.1.RELEASE"
+        coverallsGradlePlugin = "2.8.2"
+    }
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:${coverallsGradlePlugin}")
+    }
+}
+
+apply plugin: "kotlin"
+apply plugin: "kotlin-spring"
+apply plugin: "eclipse"
+apply plugin: "jacoco"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "com.github.kt3k.coveralls"
+
+group = "br.com.justiandre"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = 1.8
+
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.destination "${buildDir}/reports/coverage"
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: ["**/model/**", "**/*ApplicationStart**"])
+        })
+    }
+}
+
+coveralls {
+    sourceDirs = subprojects.findAll().sourceSets.main.allSource.srcDirs.flatten()
+    jacocoReportPath = "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+}
+
+tasks.coveralls {
+    group = 'Coverage reports'
+    description = 'Uploads the aggregated coverage report to Coveralls'
+
+    dependsOn jacocoTestReport
+    //onlyIf { System.env.'CI' && !JavaVersion.current().isJava9Compatible() }
+}
+
+test.finalizedBy(jacocoTestReport)
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin")
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compile("org.jetbrains.kotlin:kotlin-reflect")
+    compile("io.springfox:springfox-swagger2:2.8.0")
+    compile("io.springfox:springfox-swagger-ui:2.8.0")
+    compile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.50.5")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}

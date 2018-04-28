@@ -7,7 +7,7 @@ language: kotlin
 
 services:
   - docker
-
+ 
 script:
   - docker build -t $DOCKER_IMAGE_APP .
   - docker login -u "$DOCKER_AUTH_USER" -p "$DOCKER_AUTH_PASS"

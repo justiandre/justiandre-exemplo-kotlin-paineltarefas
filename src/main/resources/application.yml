@@ -6,3 +6,10 @@ logging:
       apache.http: INFO
       springframework: INFO
       springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongo: TRACE
+
+management:
+  endpoints:
+    web:
+      base-path: /manage
+      exposure:
+        include: '*'

@@ -1,5 +1,8 @@
-br.com.justiandre: INFO
-org.springframework: INFO
-org.apache.http: INFO
-logging.level.org.springframework.data.mongodb: TRACE
-org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongo: TRACE
+# Configuração de log.
+logging:
+  level:
+    org:
+      br.com.justiandre: INFO
+      apache.http: INFO
+      springframework: INFO
+      springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongo: TRACE

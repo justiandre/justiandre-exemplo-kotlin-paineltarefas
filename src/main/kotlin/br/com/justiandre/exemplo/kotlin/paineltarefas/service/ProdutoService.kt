@@ -13,4 +13,6 @@ class ProdutoService(@field: Autowired val produtoRepository: ProdutoRepository)
     fun deleteById(id: String) = produtoRepository.deleteById(id)
 
     fun save(produto: Produto) = produtoRepository.save(produto)
+
+    fun findOneByCategoriaPrincipalOrderByNomeAsc(nome: String) = produtoRepository.findByCategoriaPrincipalOrderByNomeAsc(nome)?.firstOrNull()
 }

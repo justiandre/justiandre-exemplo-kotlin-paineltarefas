@@ -7,10 +7,6 @@ data class Produto(
         var id: String? = null,
         var nome: String? = null,
         var valor: Double? = null,
-        var categoriaPrincipal: Categoria? = null,
-        var categoriasSubs: List<Categoria>? = null
-)
-
-data class Categoria(
-        var nome: String? = null
+        var categoriaPrincipal: String? = null,
+        var categoriasSubs: List<String>? = null
 )

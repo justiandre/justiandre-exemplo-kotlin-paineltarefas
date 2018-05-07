@@ -10,8 +10,11 @@ class ProdutoEndpoint(@Autowired private val produtoService: ProdutoService) {
 
     companion object {
         const val PARAM_PATH_ID: String = "id"
+        const val PARAM_PATH_CATEGORIA_NOME = "categoriaNome"
         const val URI_PATH_PRODUTO: String = "/produtos"
+        const val URI_PATH_PRODUTO_CATEGORIA: String = "$URI_PATH_PRODUTO/categoria"
         const val URI_PATH_PRODUTO_ID: String = "$URI_PATH_PRODUTO/{$PARAM_PATH_ID}"
+        const val URI_PATH_PRODUTO_CATEGORIA_NOME: String = "$URI_PATH_PRODUTO_CATEGORIA/{$PARAM_PATH_CATEGORIA_NOME}"
     }
 
     @GetMapping(URI_PATH_PRODUTO_ID)
@@ -22,5 +25,8 @@ class ProdutoEndpoint(@Autowired private val produtoService: ProdutoService) {
 
     @PostMapping(URI_PATH_PRODUTO)
     fun save(@RequestBody produto: Produto) = produtoService.save(produto)
+
+    @GetMapping(URI_PATH_PRODUTO_CATEGORIA_NOME)
+    fun findOneByCategoriaPrincipalOrderByNomeAsc(@PathVariable(PARAM_PATH_CATEGORIA_NOME) categoriaNome: String) = produtoService.findOneByCategoriaPrincipalOrderByNomeAsc(categoriaNome)
 }
  

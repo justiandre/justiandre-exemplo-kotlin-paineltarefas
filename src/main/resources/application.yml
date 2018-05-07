@@ -5,6 +5,8 @@ logging:
       br.com.justiandre: INFO
       apache.http: INFO
       springframework: INFO
+      springframework.data.repository: TRACE
+      springframework.data.mongodb: TRACE
       springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongo: TRACE
 
 management:

@@ -5,4 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 interface ProdutoRepository : MongoRepository<Produto, String> {
 
+    fun findByCategoriaPrincipalOrderByNomeAsc(categoriaPrincipal: String): List<Produto>
 }

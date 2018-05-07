@@ -22,4 +22,5 @@ class ProdutoSdk {
 
     fun findById(id: String) = testRestTemplate.getForObject("${ProdutoEndpoint.URI_PATH_PRODUTO}/$id", Produto::class.java)
 
+    fun findOneByCategoriaPrincipalOrderByNomeAsc(nome: String) = testRestTemplate.getForObject("${ProdutoEndpoint.URI_PATH_PRODUTO_CATEGORIA}/$nome", Produto::class.java)
 }

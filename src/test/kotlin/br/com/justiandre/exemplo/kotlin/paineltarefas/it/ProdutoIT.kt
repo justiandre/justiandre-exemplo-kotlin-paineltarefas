@@ -21,7 +21,11 @@ class ProdutoIT : ApplicationBaseIT() {
         val produtoConsulta = produtoSdk.findById(UUID.randomUUID().toString())
         Assert.assertNull("Não deveria retornar produto", produtoConsulta)
     }
-
+    @Test
+    fun `Consultar produto por id sem esperar resultado2`() {
+        val produtoConsulta = produtoSdk.findOneByCategoriaPrincipalOrderByNomeAsc(UUID.randomUUID().toString())
+        Assert.assertNull("Não deveria retornar produto", produtoConsulta)
+    }
 
 }
  
